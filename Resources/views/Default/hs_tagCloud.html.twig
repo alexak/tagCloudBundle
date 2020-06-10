@@ -1,0 +1,33 @@
+{% if tags is defined and tags is not empty %}
+    {% if zonenId != 'sidebar_prio' %}
+        <div class ="col-md-12">
+    {% endif %}
+
+      {% if parentName is not defined %}
+          {% set parentName = 'verwandte Themen' %}
+      {% endif %}
+      <div class="hs-singleheading hs-tabheading">{{ parentName }}</div>
+      <div class="tag-Cloud">
+          <div class="content_tags">
+              {% spaceless %}
+                {% for tag in tags %}
+                  {% set tag_uri = path("eztags_tag_url", {"tagId": tag.id}) %}
+                  {% set tag_string = tag.keyword %}
+                  {% if tag_uri != "#" %}
+                      <a href="{{tag_uri}}" class="hs-tag" title="{{tag_string}}">{{tag_string}}</a>
+                  {% else %}
+                      <span class="hs-tag">{{tag_string}}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endspaceless %}
+          </div>
+      </div>
+    {% if zonenId != 'sidebar_prio' %}
+        </div>
+    {% endif %}
+{% elseif '/content/preview/' in ezpublish.getRequestedUriString() %}
+    <div class="jumbotron">
+        <h2>Platzhalter</h2>
+        <p>für Tagcloud</p>
+    </div>
+{% endif %}

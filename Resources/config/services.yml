@@ -1,0 +1,20 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: true
+
+    raumobil_home_and_smart.tag.helper:
+        class: Raumobil\HomeAndSmart\TagCloudBundle\Helper\TagCloudHelper
+        arguments:
+            - '@eztags.api.service.tags'
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.content_type'
+            - '@ezpublish.api.service.search'
+            - '@service_container'
+            - '@ezpublish.cache_pool'
